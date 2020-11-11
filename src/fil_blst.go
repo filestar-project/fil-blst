@@ -53,6 +53,7 @@ func VerifyWindowPoSt(info abi.WindowPoStVerifyInfo,
 		return false, fmt.Errorf("Batch window proofs are not yet supported")
 	}
 
+	// 0fffffff for 8G
 	// 3fffffff for 32G
 	// 7fffffff for 64G
 	// sectorMask := sectorSize/NODE_SIZE - 1
@@ -63,6 +64,8 @@ func VerifyWindowPoSt(info abi.WindowPoStVerifyInfo,
 		sectorMask = 0x3fffffff
 	} else if typ == abi.RegisteredSealProof_StackedDrg64GiBV1 {
 		sectorMask = 0x7fffffff
+	} else if typ == abi.RegisteredSealProof_StackedDrg8GiBV1 {
+		sectorMask = 0x0fffffff
 	} else {
 		return false, fmt.Errorf("Unsupported proof type: %d", typ)
 	}
